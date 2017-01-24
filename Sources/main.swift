@@ -23,8 +23,9 @@ let session = URLSession(configuration: config)
 let localeURL = URL(string: "https://kayako-mobile-testing.kayako.com/api/v1/locales")!
 
 session.dataTask(with: localeURL) { (data, response, error) in
-	let json = try! JSONSerialization.jsonObject(with: data!, options: [])
-	let locales: [Locale] = try! unbox(dictionary: json as! [String: Any], atKey: "data")
+	
+	
+	let locales: [Locale] = try! unbox(data: data!, atKeyPath: "data", allowInvalidElements: false)
 	print(locales.map{$0.name})
 	exit(0)
 }.resume()
